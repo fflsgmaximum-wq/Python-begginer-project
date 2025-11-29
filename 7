@@ -1,0 +1,37 @@
+import jsonl
+
+# Yeh ek aisa data hai jo aapko Free Fire Server se milega
+# Note: Yeh data Python ke Dictionary (Dict) jaisa dikhta hai, 
+# lekin yeh ek string hai jo hum 'load' karenge.
+api_response_string = '''
+{
+    "status": "success",
+    "player_id": "KHUNI_HERE_1234",
+    "last_match": {
+        "kils": 15,
+        "rank": "Grandmaster III",
+        "booyah": true
+    },
+    "friends_online": ["ARUN", "LALA", "DEVIL"]
+}
+'''
+
+print("💻 API Data Parser (JSON) 💻")
+
+# JSON string ko Python के Dictionary में बदलना
+# 'json.loads' ka matlab hai: load string
+try:
+    player_data = json.loads(api_response_string)
+
+    # Ab hum data ko seedhe Dictionary ki tarah use kar sakte hain
+    print("\n------------------------------------")
+    print(f"Player Status: {player_data['status']}")
+    print(f"Your Match Kills: {player_data['last_match']['kils']}")
+    print(f"Your Current Rank: {player_data['last_match']['rank']}")
+    
+    # List se pehle friend ka naam nikalna
+    print(f"First Friend Online: {player_data['friends_online'][0]}")
+    print("------------------------------------")
+
+except Exception as e:
+    print(f"❌ ERROR: JSON data parse nahi ho paya. {e}")

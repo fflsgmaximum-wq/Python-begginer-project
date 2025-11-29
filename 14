@@ -1,0 +1,42 @@
+# Ab hum Classes ka istemaal naye tareeke se karenge
+
+# PARENT CLASS / BASE TEMPLATE
+class BaseOperation:
+    # Yeh woh method hai jo har child class mein honi zaroori hai
+    def execute(self, a, b):
+        # Agar koi child class ise define nahi karta, to error dega (Not implemented)
+        raise NotImplementedError("Har operation ko khud ka execute define karna hoga.")
+    
+    # Yeh method sabhi child classes same istemaal karengi
+    def display_result(self, operation_name, result):
+        print(f"[{operation_name}]: ANSWER IS {result}")
+
+# CHILD CLASS 1: addition ke liye
+# (Yeh BaseOperation se sab kuch 'virasat' mein leta hai)
+class Add(BaseOperation):
+    def execute(self, a, b):
+        # Add ka apna niyam
+        return a + b
+        
+# CHILD CLASS 2: Subtraction ke liye
+class Subtract(BaseOperation):
+    def execute(self, a, b):
+        # Subtract ka apna niyam
+        return a - b
+
+# --- Main Execution ---
+num1 = 10000000000000000000009
+num2 = 98800000
+
+# Child classes ke objects banana
+adder = Add()
+subtractor = Subtract()
+
+print("--- ARUN,S OOP INHERITANCE ---")
+
+# Parent class ke method aur child class ke method ko milakar istemaal karna
+add_result = adder.execute(num1, num2)
+adder.display_result("ADDITION", add_result)					
+
+sub_result = subtractor.execute(num1, num2)
+subtractor.display_result("SUBTRACTION", sub_result)

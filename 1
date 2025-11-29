@@ -1,0 +1,122 @@
+import random
+
+# --- 1. ASCII Art (Phanda - Hangman Stages) ---
+HANGMAN_PICS = [
+    """ +---+
+    |   |
+        |
+        |
+        |
+       ===
+    """, """ +---+
+    O   |
+        |
+        |
+        |
+       ===
+    """, """ +---+
+    O   |
+    |   |
+        |
+        |
+       ===
+    """, """ +---+
+    O   |
+   /|   |
+        |
+        |
+       ===
+    """, """ +---+
+    O   |
+   /|\\  |
+        |
+        |
+       ===
+    """, """ +---+
+    O   |
+   /|\\  |
+    /   |
+        |
+       ===
+    """, """ +---+
+    O   |
+   /|\\  |
+    / \\ |
+        |
+       ===
+    """
+]
+# Game ke liye shabdon ki list
+WORD_LIST = ['freefire', 'python', 'developer', 'github', 'strategy', 'gaming', 'coding','playing','onetap','headshot','gamer','arun','brajesh','veersingh','rohit','ajeet','sonu','rakesh','arvind','morkali','ramkailash','keshrilal','jagdeyi','nirupatsingh','amarsingh','rekha','bhuridevi']
+
+def get_random_word(wordList):
+    return random.choice(wordList)
+
+# Board ko print karne ka function
+def display_board(HANGMAN_PICS, missed_letters, correct_letters, secret_word):
+    print(HANGMAN_PICS[len(missed_letters)]) 
+    print(f"Galat Koshishein: {', '.join(missed_letters)}")
+
+    blanks = '_' * len(secret_word)
+    
+    # Sahi letters ko blanks mein bharna
+    for i in range(len(secret_word)):
+        if secret_word[i] in correct_letters:
+            blanks = blanks[:i] + secret_word[i] + blanks[i+1:]
+
+    print(' '.join(blanks))
+
+def get_guess(already_guessed):
+    while True:
+        print('Ek letter guess karo:')
+        guess = input().lower()
+        if len(guess) != 1:
+            print('Sirf ek single letter dalo.')
+        elif guess in already_guessed:
+            print('Yeh letter pehle hi guess ho chuka hai.')
+        elif not 'a' <= guess <= 'z':
+            print('Kripya sirf alphabet (a-z) dalein.')
+        else:
+            return guess
+
+# --- MAIN GAME LOGIC ---
+def hangman_game():
+    missed_letters = []
+    correct_letters = []
+    secret_word = get_random_word(WORD_LIST)
+    game_is_done = False
+
+    print("☠️ HANGMAN GAME START ☠️")
+    print("Aapko 2 galat koshishein milengi.")
+    
+    while not game_is_done:
+        display_board(HANGMAN_PICS, missed_letters, correct_letters, secret_word)
+
+        guess = get_guess(missed_letters + correct_letters)
+
+        if guess in secret_word:
+            correct_letters.append(guess)
+            
+            # Jeet check
+            found_all_letters = True
+            for i in range(len(secret_word)):
+                if secret_word[i] not in correct_letters:
+                    found_all_letters = False
+                    break
+            if found_all_letters:
+                print(f"\n🎉 BOOYAH! Sahi shabd dhundh liya: {secret_word}")
+                game_is_done = True
+        
+        else:
+            missed_letters.append(guess)
+            
+            # Haar check (index 2, total 7 pictures)
+            if len(missed_letters) == len(HANGMAN_PICS) - 1:
+                display_board(HANGMAN_PICS, missed_letters, correct_letters, secret_word)
+                print(f"\n❌ GAME OVER! Sahi shabd tha: {secret_word}")
+                game_is_done = True
+
+    print("\nThank you for playing!")
+    
+# Function call
+hangman_game()

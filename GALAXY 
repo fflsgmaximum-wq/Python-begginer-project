@@ -1,0 +1,34 @@
+import random
+import time
+
+# ANSI Color Codes (Python mein rang badalne ka jaadu)
+COLORS = {
+    "red": "\033[91m",
+    "yellow": "\033[93m",
+    "cyan": "\033[96m",
+    "white": "\033[97m",
+    "reset": "\033[0m"  # Color band karne ke liye
+}
+# Sabhi colors ki list banana
+color_list = list(COLORS.values())[:-1] 
+
+def galaxy_simulation(stars_per_row, total_rows):
+    print("✨ GALAXY LOADING... ✨")
+    time.sleep(1)
+    
+    # Nested Loop shuru
+    for row in range(total_rows):
+        star_line = ""
+        for star in range(stars_per_row):
+            # Har star ke liye random color chuno
+            color = random.choice(color_list)
+            
+            # Star aur space ko color code ke saath jodna
+            star_line += color + random.choice(["*", "•", "✨"]) + " "
+        
+        # Line ko print karna aur color reset karna
+        print(star_line + COLORS["reset"])
+
+# Main Execution: 20 lines mein 50 stars
+galaxy_simulation(stars_per_row=50, total_rows=20) 
+print("\nMISSION COMPLETE: You created a digital galaxy!")

@@ -1,0 +1,30 @@
+import time
+
+def bubble_sort(data_list):
+    n = len(data_list)
+    print("Shuruwati List:", data_list)
+    
+    # Outer loop: Har element ke liye chalta hai
+    for i in range(n):
+        # Inner loop: Saath wale elements ko compare karta hai
+        for j in range(0, n - i - 1):
+            
+            # Agar left wala item right wale se bada hai, toh SWAP (jagah badlo) karo
+            if data_list[j] > data_list[j + 1]:
+                # Python mein swapping ka sabse aasan tareeka
+                data_list[j], data_list[j + 1] = data_list[j + 1], data_list[j]
+        
+    return data_list
+
+# --- Main Execution ---
+# Free Fire ke kuch scores jo sorted nahi hain
+unsorted_scores = [95, 12, 5, 88, 33, 72] 
+
+print("🏆 FINAL ALGORITHM: BUBBLE SORT 🏆")
+print("-----------------------------------")
+
+# Function ko call karna
+sorted_scores = bubble_sort(unsorted_scores)
+
+print("\n✅ Sort Hone ke baad:")
+print(sorted_scores)

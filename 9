@@ -1,0 +1,28 @@
+import time
+
+# Generator Function: Yeh 'yield' use karta hai. Data turant nahi banta.
+def create_generator(n):
+    print("Function chalu hua...")
+    for i in range(n):
+        yield i * 2 # 'return' ki jagah 'yield' use karna
+        time.sleep(0.5) # Dikhane ke liye thoda ruko
+
+print("🧠 ADVANCED GENERATORS (Memory Saver) 🧠")
+print("---------------------------------------")
+
+# Generator ko call karne par, code turant nahi chalta
+data_generator = create_generator(5) # Humne 5 values maangi
+
+print("\n--- Test: Value nikalna shuru ---")
+print("Generator ban gaya, lekin data abhi tak nahi nikala!")
+time.sleep(1)
+
+# Jab tak hum next() nahi bulate, tab tak data generate nahi hota
+print(f"1st Value (next() se nikla): {next(data_generator)}")
+print(f"2nd Value (next() se nikla): {next(data_generator)}")
+
+print("\n--- Baaki Data Loop Karen ---")
+
+# For loop mein Generator ka istemaal (Har loop mein naya data aayega)
+for num in data_generator:
+    print(f"Value: {num}")

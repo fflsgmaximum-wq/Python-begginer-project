@@ -1,0 +1,40 @@
+import os
+
+# Recursion Function: File ko har folder mein dhoondna
+def find_file_recursively(directory, filename):
+    print(f"-> Searching in: {directory}")
+    
+    # os.listdir() se current folder ke items nikalna
+    for item in os.listdir(directory):
+        full_path = os.path.join(directory, item)
+        
+        if os.path.isdir(full_path):
+            # Agar folder mila to function khud ko dobara call karega (Recursion)
+            result = find_file_recursively(full_path, filename)
+            if result:
+                return result
+        elif item == filename:
+            # Agar file mil gayi
+            return full_path
+    return None
+
+print("🕵️ ADVANCED RECURSIVE FILE FINDER 🕵️")
+print("---------------------------------------")
+
+# Start location: Pydroid ka working folder (yahan se dhoondna shuru karein)
+START_DIR = "/storage/emulated/0/Pydroid3" 
+TARGET_FILE = "my_todo_list.txt" # Woh file jo humne banayi thi
+
+try:
+    path = find_file_recursively(START_DIR, TARGET_FILE)
+    
+    if path:
+        print(f"\n✅ File Found at: {path}")
+    else:
+        print("\n❌ File nahi mili. Dhoondna band.")
+
+except Exception as e:
+    # Yeh error Android System Permissions ka ho sakta hai
+    print(f"\n❌ SYSTEM ERROR: Permissions ya Directory ka masla. {e}")
+	
+	

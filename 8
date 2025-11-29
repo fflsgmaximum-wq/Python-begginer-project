@@ -1,0 +1,34 @@
+import socket
+import time
+
+# Function jo har port ko check karta hai
+def scan_port(host, port):
+    try:
+        # Socket banao (Network connection ki setting)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(0.5) # Time limit lagana
+
+        # Port ko connect karne ki koshish karna
+        # 0 return hone ka matlab hai ki port khula hai
+        if s.connect_ex((host, port)) == 0:
+            print(f"✅ Port {port}: OPEN (Service Detected)")
+        else:
+            print(f"❌ Port {port}: Closed")
+        s.close()
+    except socket.gaierror:
+        # Agar hostname galat ho
+        print("❌ Hostname Resolve Nahi Hua.")
+    except socket.error:
+        # Connection mein koi dikkat
+        print("❌ Server se connect nahi ho paya.")
+
+# --- Main Program ---
+print("🕵️ PYTHON NETWORK SCANNER 🕵️")
+target_host = '127.0.0.1' # Aapka apna local computer (bilkul safe)
+print(f"Scanning Target: {target_host}")
+print("----------------------------")
+
+# Commonly used ports (21=FTP, 80=HTTP, 443=HTTPS) check karna
+for port in [21, 22, 80, 443, 8080]:
+    scan_port(target_host, port)
+    time.sleep(0.1) # Thoda sa delay

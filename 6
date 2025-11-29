@@ -1,0 +1,23 @@
+import pandas as pd
+
+print("📊 Free Fire Player Data Analysis 📊")
+print("------------------------------------")
+
+try:
+    # Pandas library ka use karke CSV file ko padhna
+    data = pd.read_csv('player_scores.csv')
+
+    # Data ko screen par dikhana
+    print("Data:\n", data)
+
+    # Pandas se 'Score' column ka average nikalna
+    average_score = data['Score'].mean()
+
+    print("\n------------------------------------")
+    print(f"✅ Sabhi players ka Average Score hai: {average_score:.2f}")
+    print("------------------------------------")
+
+except FileNotFoundError:
+    print("❌ ERROR: 'player_scores.csv' file nahi mili. Check karein ki woh same folder mein hai.")
+except Exception as e:
+    print(f"❌ ERROR in analysis: {e}")

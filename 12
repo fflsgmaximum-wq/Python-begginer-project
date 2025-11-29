@@ -1,0 +1,44 @@
+import random
+
+# Function jo dice ko roll karta hai aur print karta hai
+def roll_dice():
+    # List mein har dice face (1 se 6) ka visual data store kiya gaya hai
+    dice_faces = [
+        # 1
+        ["-------", "|     |", "|  o  |", "|     |", "-------"],
+        # 2
+        ["-------", "| o   |", "|     |", "|   o |", "-------"],
+        # 3
+        ["-------", "| o   |", "|  o  |", "|   o |", "-------"],
+        # 4
+        ["-------", "| o o |", "|     |", "| o o |", "-------"],
+        # 5
+        ["-------", "| o o |", "|  o  |", "| o o |", "-------"],
+        # 6
+        ["-------", "| o o |", "| o o |", "| o o |", "-------"]
+    ]
+    
+    # random.randint(0, 5) se List mein se koi ek face chuno
+    result_index = random.randint(0, 5)
+    
+    # List ke andar ki har line ko print karo
+    for line in dice_faces[result_index]:
+        print(line)
+        
+    # Result print karo (index 0=1, index 5=6)
+    print(f"🎲 Number aaya: {result_index + 1}")
+    print("------------------\n")
+
+# Main Loop (while)
+print("🎲 LUDO DICE ROLLER 🎲")
+print("Band karne ke liye 'exit' likhein.")
+
+while True:
+    user_input = input("Dice fekne ke liye Enter dabayein: ")
+    
+    if user_input.lower() == 'exit':
+        break
+    
+    print("\n--- Rolling... ---")
+    roll_dice()
+⁰11

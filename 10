@@ -1,0 +1,31 @@
+import threading
+import time
+
+# Thread 1: Timer function (Yeh background mein chalega)
+def thread_timer():
+    print("\n⏰ Thread 1: Timer shuru...")
+    for i in range(4):
+        time.sleep(1) # Har 1 second baad rukna
+        print(f"⏰ Thread 1: {i + 1} second ho gaye")
+    print("⏰ Thread 1: Kaam khatam.")
+
+# --- Main Program (Thread 2) ---
+print("🚀 ADVANCED THREADING CHALLENGE 🚀")
+
+# Naya Thread banana aur use function assign karna
+timer_thread = threading.Thread(target=thread_timer)
+
+# Thread ko chalu karna (ab dono kaam ek saath shuru honge)
+timer_thread.start()
+
+# Main Program (dusra kaam) bina Thread 1 ka intezaar kiye chalta rahega
+print("---------------------------------------")
+print("Main Thread 2: Hello! Main jaldi se apna kaam karta hoon...")
+time.sleep(1.5) # Dikhane ke liye 1.5 second ruko
+print("Main Thread 2: Mera kaam ho gaya.")
+
+# Ab main program, thread 1 ke khatam hone ka intezaar karega
+timer_thread.join() 
+
+print("---------------------------------------")
+print("✅ Dono Threads ne milkar kaam kiya! Mission Complete!")

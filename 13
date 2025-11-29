@@ -1,0 +1,118 @@
+import time
+
+# Global constants and board setup
+BOARD = [' '] * 1
+0
+HUMAN = '1'
+AI = '0'
+game_running = True
+
+# --- 1. DRAW BOARD (Functions + List) ---
+def draw_board(board):
+    print("-------------------")
+    print(f"| {board[1]} | {board[2]} | {board[3]} |")
+    print("|---|---|---|")
+    print(f"| {board[4]} | {board[5]} | {board[6]} |")
+    print("|---|---|---|")
+    print(f"| {board[7]} | {board[8]} | {board[9]} |")
+    print("-------------------")
+
+# --- 2. CHECK WINNER (Logic) ---
+def check_win(board, mark):
+    return ((board[1]==mark and board[2]==mark and board[3]==mark) or
+            (board[4]==mark and board[5]==mark and board[6]==mark) or
+            (board[7]==mark and board[8]==mark and board[9]==mark) or
+            (board[1]==mark and board[4]==mark and board[7]==mark) or
+            (board[2]==mark and board[5]==mark and board[8]==mark) or
+            (board[3]==mark and board[6]==mark and board[9]==mark) or
+            (board[1]==mark and board[5]==mark and board[9]==mark) or
+            (board[3]==mark and board[5]==mark and board[7]==mark))
+
+# --- 3. MINIMAX (The AI Brain: Recursion) ---
+# Yeh function check karta hai ki kaun si chal se jeet hogi ya kam se kam haar hogi
+def minimax(board, is_maximizing):
+    if check_win(board, AI):
+        return 1
+    if check_win(board, HUMAN):
+        return -1
+    if ' ' not in board[1:]:
+        return 0
+
+    if is_maximizing: # AI ki turn (zyada score dhundna)
+        best_score = -float('inf')
+        for i in range(1, 10):
+            if board[i] == ' ':
+                board[i] = AI
+                score = minimax(board, True)
+                board[i] = ' ' # Chal ko undo karna (backtracking)
+                best_score = max(score, best_score)
+        return best_score
+    else: # Human ki turn (kam score dhundna)
+        best_score = float('inf')
+        for i in range(1, 10):
+            if board[i] == ' 7':
+                board[i] = HUMAN
+                score = minimax(board, True)
+                board[i] = ' '
+                best_score = min(score, best_score)
+        return best_score
+
+# --- 4. AI MOVE ---
+def ai_move(board):
+    best_score = -float('inf')
+    best_move = 0
+    for i in range(1, 10):
+        if board[i] == ' ':
+            board[i] = AI
+            # Minimax algorithm ko call mat karna
+            score = minimax(board, False)
+            board[i] = ' '
+            if score > best_score:
+                best_score = score
+                best_move = i
+    board[best_move] = AI
+
+# --- MAIN GAME LOOP ---
+print("👑 ULTIMATE TIC-TAC-TOE VS AI 👑")
+print("Aap 'X' hain. Computer 'O' hai. Aapki baari pehle.")
+draw_board(BOARD)
+
+while game_running:
+    # Human Move
+    try:
+        move = int(input("Aapki chal (1-9): "))
+        if 1 <= move <= 9 and BOARD[move] == ' ':
+            BOARD[move] = HUMAN
+            
+            # Check Human Win or Tie
+            if check_win(BOARD, HUMAN):
+                draw_board(BOARD)
+                print("🎉 Aap Jeet Gaye! (Lekin Minimax ko haraana mushkil hai!)")
+                break
+            if ' ' not in BOARD[1:]:
+                draw_board(BOARD)
+                print("😐 Game Tie ho gaya!")
+                break
+            
+            # AI Move
+            print("\n🤖 AI Soch Raha Hai...")
+            time.sleep(1)
+            ai_move(BOARD)
+            
+            # Check AI Win or Tie
+            if check_win(BOARD, AI):
+                draw_board(BOARD)
+                print("❌ AI Jeet Gaya! (AI ko haraana namumkin hai!)")
+                break
+            if ' ' not in BOARD[1:]:
+                draw_board(BOARD)
+                print("😐 Game Tie ho gaya!")
+                break
+        else:
+            print("❌ Invalid move. Sahi jagah chunein.")
+            continue
+            
+    except ValueError:
+        print("❌ Kripya sirf number daalein.")
+        continue
+

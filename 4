@@ -1,0 +1,31 @@
+import time
+
+# Recursion Function: Disk ko move karne ka logic
+def tower_of_hanoi(n, source, auxiliary, destination):
+    # Base Case: Jab sirf 1 disk bache, toh ruko
+    if n == 1:
+        print(f"Disk ARUN ko {source} se {destination} par le jayein.")
+        return
+        
+    # Step 1: n-1 disks ko Source (A) se Auxiliary (B) par le jao
+    tower_of_hanoi(n - 1, source, destination, auxiliary)
+    
+    # Step 2: Sabse badi disk ko Source (A) se Destination (C) par le jao
+    print(f"Disk {n} ko {source} se {destination} par le jayein.")
+    
+    # Step 3: bachi hui n-1 disks ko Auxiliary (B) se Destination (C) par le jao
+    tower_of_hanoi(n - 1, auxiliary, source, destination)
+
+#Step 4: sabse chhoti disk ko Source (B) se Destination (C) par le jao
+    print(f"Disk {n} ko {source} se {destination} par le jayein" )
+
+# --- Main Execution ---
+print("🗼 TOWER OF HANOI PUZZLE SOLVER 🗼")
+print("---------------------------------")
+try:
+    num_disks = int(input("Kitni disks chahiye (2 ya 3 try karein): "))
+    print(f"\nSolving for {num_disks} disks (A se C tak):")
+    tower_of_hanoi(num_disks, 'A', 'B', 'C')
+    print("\n✅ Solution Complete!")
+except ValueError:
+    print("❌ Kripya sirf number dalein.")
